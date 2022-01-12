@@ -2,17 +2,26 @@
 #include <fstream>
 using namespace std;
 
-// output format to use IDENTICALLY:
-//BSH:Saru> ./filesize input.3lines input.1line 
-//program: ./filesize
-// input.3lines: 3
-// input.1line: 1
+int numlines(char *filename) {
+    int lines = 0;
+    ifstream thefile(filename); 
+    if (!thefile.is_open())
+        return(-1);
+
+    string inputline;
+    while (getline(thefile, inputline))
+        ++lines;
+    
+    return lines;
+}
+
 
 int main( int argc, char* argv[] )
 {
-    // just to get you started, this is how to refer to the arguments that were passed
-    for (int arg = 0; arg < argc; ++arg)
-            std::cout << "argv[" << arg << "]: " << argv[arg] << '\n' ;
+    std::cout << "program: " << argv[0] << '\n' ;
 
-    exit(0); // this means that the program executed correctly!
+    for (int arg = 1; arg < argc; ++arg) {
+        std::cout << " " << argv[arg] << ": " << numlines(argv[arg]) << '\n' ;
+    }
+    exit(0);
 }
